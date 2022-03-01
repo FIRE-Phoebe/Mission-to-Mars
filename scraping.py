@@ -27,6 +27,7 @@ def scrape_all():
     return data
 
  ############################
+ ####Scraping mars_news########
  ############################ 
 #insert new function:
 def mars_news(browser):
@@ -55,7 +56,7 @@ def mars_news(browser):
     return news_title, news_p
 
 ###################################
-# ### Featured Images
+#### Featured Images#########
 #################################
 def featured_image(browser):
     # Visit URL
@@ -84,8 +85,8 @@ def featured_image(browser):
     
     return img_url
 
-###########################
-#def function and use try-except for error
+#################################
+####scrape mars_facts########
 # ###############################
 def mars_facts(): 
     # Add try/except for error handling
@@ -103,7 +104,7 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes="table table-striped")
 
-
+#########################################################
 if __name__ == "__main__":
     # If running as script, print scraped data
     print(scrape_all())
