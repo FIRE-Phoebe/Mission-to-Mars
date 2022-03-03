@@ -48,12 +48,12 @@ def mars_news(browser):
         # Use the parent element to find the first 'a' tag and save it as 'news_title'
         news_title = slide_elem.find('div', class_='content_title').get_text()
         # Use the parent element to find the paragraph text
-        news_p = slide_elem.find('div', class_='article_teaser_body').get_text()
+        news_paragraph = slide_elem.find('div', class_='article_teaser_body').get_text()
 
     except AttributeError:
         return None, None
 
-    return news_title, news_p
+    return news_title, news_paragraph
 
 ###################################
 #### Featured Images#########
@@ -98,11 +98,12 @@ def mars_facts():
         return None
 
     #assign columns and set_index of df
-    df.columns=['description', 'Mars', 'Earth']
-    df.set_index('description', inplace=True)
+    df.columns=['Description', 'Mars', 'Earth']
+    df.set_index('Description', inplace=True)
 
     # Convert dataframe into HTML format, add bootstrap
-    return df.to_html(classes="table table-striped")
+    return df.to_html(classes = "table table-striped")
+
 
 #########################################################
 if __name__ == "__main__":
