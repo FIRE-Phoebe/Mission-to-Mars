@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup as soup
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
 import datetime as dt
+import time
 
 def scrape_all():
     # Initiate headless driver for deployment
@@ -12,6 +13,7 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=False)
 
     news_title, news_paragraph = mars_news(browser)
+    
 
      # Run all scraping functions and store results in a dictionary
     data = {
@@ -19,7 +21,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemispheres": hemisp(browser)
     }
 
     # Stop webdriver and return data
@@ -104,6 +107,39 @@ def mars_facts():
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html(classes = "table table-striped")
 
+###############################################################
+####Scrape High-Resolution Mars’ Hemisphere Images and Titles##
+#########################################################3#####
+def hemisp(browser):
+    #visit url
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+    hemisphere_image_urls = []
+
+    for i in range(4): 
+        full_img=browser.find_by_tag('img.thumb')[i]
+        full_img=full_img.click()
+        time.sleep(1)
+    
+        #use bs to parser
+        html=browser.html
+        l_soup=soup(html,'html.parser')
+    
+        #find the tag <a with sample,get value of href.
+        for link in l_soup.find_all('a',text="Sample"):
+            img_link=link.get('href')
+        
+        #get absolute img_url and scrape title
+        img_url=f'https://marshemispheres.com/{img_link}'
+        title=l_soup.find_all('h2')[0].get_text()
+        hemisphere={'img_url': img_url,'title': title}
+        hemisphere_image_urls.append(hemisphere)
+    
+        browser.back()   
+
+    #return function
+    return hemisphere_image_urls
+    
 
 #########################################################
 if __name__ == "__main__":
