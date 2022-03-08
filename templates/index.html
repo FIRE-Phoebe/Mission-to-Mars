@@ -11,6 +11,12 @@
     />
   </head>
   <body>
+    <style>
+      body{
+        background-image: url(https://www.nasa.gov/sites/default/files/thumbnails/image/mars_perseverance_blog1.jpeg);
+        background-size:cover
+      }
+    </style>
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <!--Add background image-->
@@ -40,7 +46,6 @@
       <div class="row" id="mars-featured-image">
         <div class="col-md-8">
           <h2>Featured Mars Image</h2>
-
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
             src="{{mars.featured_image | default('static/images/error.png', true) }}"
@@ -51,10 +56,9 @@
 
         <div class="col-md-4" >
             <!-- Mars Facts -->
-            <h4 style="font-family:Arial, Helvetica, sans-serif">Mars Facts</h4>
+            <h3 style="font-family:Arial, Helvetica, sans-serif">Mars Facts</h3>
             <div class="table-striped" id="mars-facts"
                 style="background-color:rgba(165, 219, 245, 0.952)">
-                  
                   {{ mars.facts | safe }}
             </div>
         </div>
